@@ -33,14 +33,17 @@ namespace Bus
         public string[] ListOfDestinations = { "Paris", "Berlin ", "Wien", "Amsterdam" };
         public string[] ListOfBusses = { "Double Decker", "Bus " };
         public string[] ListOfSeats = { "Normalt sæde", "Bord sæde ", "Benplads sæde" };
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
+            Route Berlin = new Route();
+
             int RouteChoice = 1;
             int BusChoice = 1;
             int SeatChoice = 1;
             string CustomerName = "";
             int CustomerAge = 1;
             int GroupNumber = 1;
+
             Menu(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
         }
         public static void Menu(int RouteChoice, int BusChoice, int SeatChoice, string CustomerName, int CustomerAge, int GroupNumber)
@@ -86,7 +89,7 @@ namespace Bus
                     switch (Choice)
                     {
                         case 1:
-                            Routes.Route(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
+                            Route(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
                             i++;
                             break;
 
@@ -104,10 +107,6 @@ namespace Bus
                 }
             } while (i == 0);
         }
-    }
-
-    class Routes
-    {
         public static void Route(int RouteChoice, int BusChoice, int SeatChoice, string CustomerName, int CustomerAge, int GroupNumber)
         {
             Console.Clear();
@@ -131,7 +130,7 @@ namespace Bus
                     switch (Choice)
                     {
                         case 1:
-                            BusType.Bus(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
+                            Bus(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
                             i++;
                             break;
 
@@ -149,10 +148,6 @@ namespace Bus
                 }
             } while (i == 0);
         }
-    }
-    class BusType
-    {
-
         public static void Bus(int RouteChoice, int BusChoice, int SeatChoice, string CustomerName, int CustomerAge, int GroupNumber)
         {
             Console.Clear();
@@ -167,19 +162,19 @@ namespace Bus
                 {
                     Console.Clear();
                     //Now that the customer have chosen the route, he/her can choose the bus. 
-                    Console.WriteLine("Nu kan du vælge at gå tilbage og ændre rute[1], du kan vælge sæde[2] eller bare luk programmet[3]");
+                    Console.WriteLine("Nu kan du vælge sæde[1], ændrer rute[2] eller bare luk programmet[3]");
                     Console.Write("Valg -> ");
                     int Choice = Convert.ToInt32(Console.ReadLine());
 
                     switch (Choice)
                     {
                         case 1:
-                            Routes.Route(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
+                            Seat(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
                             i++;
                             break;
 
                         case 2:
-                            Seats.Seat(RouteChoice, BusChoice, SeatChoice,CustomerName, CustomerAge, GroupNumber);
+                            Route(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
                             i++;
                             break;
 
@@ -197,26 +192,25 @@ namespace Bus
                 }
             } while (i == 0);
         }
-    }
-    class Seats
-    {
         public static void Seat(int RouteChoice, int BusChoice, int SeatChoice, string CustomerName, int CustomerAge, int GroupNumber)
         {
             Console.Clear();
-            Console.Write("Valgte du en normal bus[1] eller en dobbeldecker bus[2]");
-            int BusChoiceAgain = Convert.ToInt32(Console.ReadLine());
-            if (BusChoiceAgain == 1)
+            if (BusChoice == 1)
             {
-                Console.WriteLine("Du har 3 Sæder at vælge imellem. \nEn plads vi giver dig koster intet ekstra[1] \nEn bordplads koster 75kr ekstra[2]");
+                Console.WriteLine("Du har 3 Sæder at vælge imellem. \nEn plads vi giver dig koster intet ekstra[1] \nEn bordplads koster 75kr ekstra[2]\nEn vindues plads i fronten af bussen koster 50kr ekstra[3]");
                 Console.Write("Hvilket sæde vil du tage? -> ");
                 SeatChoice = Convert.ToInt32(Console.ReadLine());
+                Randombus(GroupNumber);
             }
             else
             {
-                Console.WriteLine("Du har 3 Sæder at vælge imellem. \nEn plads vi giver dig koster intet ekstra[1] \nEn bordplads koster 75kr ekstra[2]\nEn vindues plads i fronten af bussen koster 50kr ekstra");
+                Console.WriteLine("Du har 3 Sæder at vælge imellem. \nEn plads vi giver dig koster intet ekstra[1] \nEn bordplads koster 75kr ekstra[2]\nEn vindues plads i fronten af bussen koster 50kr ekstra[3]");
                 Console.Write("Hvilket sæde vil du tage? -> ");
                 SeatChoice = Convert.ToInt32(Console.ReadLine());
+                RandomDBus(GroupNumber);
+
             }
+            
 
             int i = 0;
             do
@@ -231,17 +225,17 @@ namespace Bus
                     switch (Choice)
                     {
                         case 1:
-                            Routes.Route(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
+                            Route(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
                             i++;
                             break;
 
                         case 2:
-                            BusType.Bus(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
+                            Bus(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
                             i++;
                             break;
 
                         case 3:
-                            Tickets.Ticket(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
+                            Ticket(RouteChoice, BusChoice, SeatChoice, CustomerName, CustomerAge, GroupNumber);
                             i++;
                             break;
 
@@ -259,9 +253,6 @@ namespace Bus
                 }
             } while (i == 0);
         }
-    }
-    class Tickets
-    {
         public static void Ticket(int RouteChoice, int BusChoice, int SeatChoice, string CustomerName, int CustomerAge, int GroupNumber)
         {
             Console.Clear();
@@ -285,7 +276,7 @@ namespace Bus
                     switch (TicketChoice)
                     {
                         case 1:
-                            
+
                             i++;
                             break;
 
@@ -308,12 +299,74 @@ namespace Bus
                 }
             } while (i == 0);
         }
-        static void TicketPrice(int RouteChoice, int BusChoice, int SeatChoice, string CustomerName, int CustomerAge, int GroupNumber)
+        public static void Randombus(int Groupnumber)
         {
-            Console.Clear();
-            
+            Random randombus = new Random();
+
+            int randomseat = randombus.Next(1, 35);
+            int finalseatBus = randomseat + Groupnumber - 1;
+            Console.WriteLine("Jeres sæder starter ved " + randomseat + " og slutter ved " + finalseatBus);
+            Console.ReadKey();
+        }
+        public static void RandomDBus(int Groupnumber)
+        {
+            Random randomDBus = new Random();
+
+            int randomseat = randomDBus.Next(1, 65);
+            int finalseatDBus = randomseat + Groupnumber - 1;
+            Console.WriteLine("Jeres sæder starter ved " + randomseat + " og slutter ved " + finalseatDBus);
+            Console.ReadKey();
         }
     }
+    class Route
+    {
+        private string destination;
+        Bus bus;
+        public Route()
+        {
+            bus = new Bus();
+            bus.CreateSeats(50);
+        }
+    }
+    class Bus
+    {
+        // bustype;
+        private Seat[] seats;
+        private int nSeats;
+        public void CreateSeats(int n)
+        {
+            nSeats = n;
+            seats = new Seat[nSeats];
+            for(int i = 0; i < nSeats; i++)
+            {
+                seats[i] = new Seat();
+                seats[i].setNr(i + 1);
+            }
 
-
+        }
+        
+    }
+    class Seat : Program
+    {
+        private int nr;
+        private bool sold;
+        private bool extraLegSpace = false;
+        private bool tableSeat = false;
+        private int price;
+        public void setNr(int n)
+        {
+            nr = n;
+        }
+        public Seat()
+        {
+            sold = false;
+            extraLegSpace = false;
+            tableSeat = false;
+            price = 100;
+        }
+    }
+    class Ticket
+    {
+        
+    }
 }
